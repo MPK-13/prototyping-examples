@@ -1,19 +1,44 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Home" %}
+{% block pageTitle %}
+  GOV.UK Prototype Kit
+{% endblock %}
+
 
 {% block content %}
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
 
-    {% include "govuk-prototype-kit/includes/homepage-top.njk" %}
+    <h1 class="govuk-heading-l"> GOV.UK Prototyping examples</h1>
+    <p class="govuk-body--l">Please note there are many ways to acheive similar results, These are just the methods I use.</p>
 
-    <h1 class="govuk-heading-xl">
-      {{ serviceName }}
-    </h1>
+    <table class="govuk-table">
 
-    {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %}
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Example</th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Description</th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-half">Files to look at</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <a href="example1/index">Versioning</a>
+          <td class="govuk-table__cell">The ability to create multiple independent versions of an iterative prototype.</td>
+          <td class="govuk-table__cell">
+            <ul class="govuk-list govuk-list--bullet">
+              <li>individual version folders <a href="https://github.com/MPK-13/prototyping-examples/tree/main/app/views/example1">app > views > example1</a></li>
+              <li>the overarching routes file <a href="https://github.com/MPK-13/prototyping-examples/tree/main/app/routes.js">app > routes.js</a></li>
+              <li>the individual routes files within the version folder <a href="https://github.com/MPK-13/prototyping-examples/tree/main/app/views/example1/_routes.js">app > views > example1 > _routes.js</a></li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
   </div>
 </div>
 

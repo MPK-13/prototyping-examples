@@ -1,0 +1,72 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Make a referral
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-l">
+      Versioning
+    </h1>
+
+    <p class="govuk-body-l">
+      The ability to create multiple independent versions of an iterative prototype.
+    </p>
+
+    <p class="govuk-body">
+      Creating independent version of your prototype can help your to prove how you've iterated your prototype based on UR insights  (Service Standard 8).  
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Start with a folder structure
+    </h2>
+    <p>
+      Inside your app > views folder create a folder that you'll store your files in. Remember what you name the folder as you'll need it in reference it later.
+    </p>
+    <p>
+      Here's an example for this project <a target="_blank" href"https://github.com/MPK-13/prototyping-examples/tree/main/app/views"> https://github.com/MPK-13/prototyping-examples/tree/main/app/views</a> (opens in a new window)
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Create independent routes
+    </h2>
+    <p>Inside your version folder create a new routes file for that version. I call them _routes.js so I don't confuse it with the master routes file.</p>
+    <p>You should also create the variable version to save time later. Just remember to include the version variable in you redirects so the server know which version you're talking about.</p>
+    <p>
+      Here's an example for this project <a target="_blank" href"https://github.com/MPK-13/prototyping-examples/tree/main/app/views/example1/_routes.js"> https://github.com/MPK-13/prototyping-examples/tree/main/app/views/example1/_routes.js</a> (opens in a new window)
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Link the routes files
+    </h2>
+
+    <p>The master routes file, app > routes, is then used to point to all of your individual routes files</p>
+    <p>
+      Here's an example for this project <a target="_blank" href"https://github.com/MPK-13/prototyping-examples/tree/main/app/routes.js"> https://github.com/MPK-13/prototyping-examples/tree/main/app/routes.js</a> (opens in a new window)
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Creating a new version
+    </h2>
+
+    <p>
+      Once this is all setup, to create a new version you need to:
+    </p>
+    <ol class="govuk-list govuk-list--number">
+      <li>Duplicate your version folder and give it a new name</li>
+      <li>Change the version variable in the _routes.js file you've just created as part of the folder duplication. <br>var version = 'this should be your new folder name'<br></li>
+      <li>Duplicate the require('./views/example1/_routes') line in the main routes file and point it at your new version.</li>
+    </ol>
+
+  </div>
+</div>
+
+
+{% endblock %}
