@@ -6,5 +6,5 @@ const router = govukPrototypeKit.requests.setupRouter()
 
         // This is an example post
         router.post('/'+ version +'/index', function(request, response) {
-            response.redirect(version +'completed');
+            response.redirect('/'+version +'/completed');
         })

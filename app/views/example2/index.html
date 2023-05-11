@@ -1,0 +1,210 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  HTML error example
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-l">
+      HTML error example
+    </h1>
+
+    <p class="govuk-body-l">
+      Testing error messages with users
+    </p>
+
+    <p class="govuk-body">
+      You should only look to do this if you need to test a specific message. Adding error messages to all pages probably isn't necessary. 
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Create your input page.
+    </h2>
+    <p>Design the page with the inputs you require</p>
+
+    <h2 class="govuk-heading-m">
+      Add the error messages
+    </h2>
+    <p>Add the Error message and Error summary component from the design system</p>
+    
+    <h2 class="govuk-heading-m">
+      Hide the errors using nunjunks template ifs
+    </h2>
+    <p>Using nunjunk templating logic (<a target="_blank" href="https://mozilla.github.io/nunjucks/templating.html#if">https://mozilla.github.io/nunjucks/templating.html#if</a>) we can use data variables to show and hide the error message and error summary. Link to example code: <a target="_blank" href=https://github.com/MPK-13/prototyping-examples/tree/main/app/views/example2">https://github.com/MPK-13/prototyping-examples/tree/main/app/views/example2</a></p>
+
+    <h2 class="govuk-heading-m">
+      Create the routing to make the errors show if needed
+    </h2>
+    <p>We can then check the validation in our page post. If the validation fails, we redirect to same page and swith on the error mesages using data variables.</p>
+
+    <h2 class="govuk-heading-l govuk-!-padding-top-9">
+      Working example
+    </h2>
+    <p>
+      In this example we'll check to see if:
+      <ul class="govuk-list govuk-list--bullet">
+        <li>A name has been entered</li>
+        <li>An age has been entered</li>
+        <li>The age is 18 or older</li>
+        <li>A nationality option has been selected</li>
+      </ul>
+    </p>
+
+    <!-- 
+      We use nunjunks templating logic to hide or show sections of the page.
+      First use the error session to turn on the main error box.
+    -->
+    {% if data['error']== "true"%} 
+      <div class="govuk-error-summary" data-module="govuk-error-summary">
+        <div role="alert">
+          <h2 class="govuk-error-summary__title">
+            There is a problem
+          </h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+
+              <!-- The we use the individual error details to show the right error lines -->
+              {% if data['error_detail1']== "true"%}
+                <li>
+                  <a href="#name">You need to enter your name</a>
+                </li>
+              {% endif %}
+
+              {% if data['error_detail2']== "true"%}
+                <li>
+                  <a href="#age">You need to enter your age</a>
+                </li>
+              {% endif %}
+
+              {% if data['error_detail3']== "true"%}
+                <li>
+                  <a href="#age">You must be over 18 years old</a>
+                </li>
+              {% endif %}
+
+              {% if data['error_detail4']== "true"%}
+                <li>
+                  <a href="#nationality">You must select a nationality</a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    <form method="post">
+      <!-- 
+        Next we add the govuk-form-group--error class for the inputs that have errors. This adds the red line to the left of the input
+      -->
+      <div class="govuk-form-group 
+        {% if data['error_detail1']== "true"%} 
+          govuk-form-group--error 
+        {% endif %}
+      ">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--m" for="name">
+            Enter your name
+          </label>
+        </h1>
+        {% if data['error_detail1']== "true"%} 
+          <p id="passport-issued-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> You need to enter your name
+          </p>
+        {% endif %}
+        <input class="govuk-input" id="name" name="name" type="text" value="{{data['name']}}">
+      </div>
+
+      <!-- 
+        Finally we show the corresponding information to help rectify the error. 
+        These should be the same as what has been defined in the error summary.
+       -->
+      <div class="govuk-form-group 
+        {% if data['error_detail2']== "true" or data['error_detail3']== "true" %} 
+          govuk-form-group--error 
+        {% endif %}
+      ">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--m" for="age">
+            How old are you?
+          </label>
+        </h1>
+        <div id="event-name-hint" class="govuk-hint">
+          You need to be at least 18 years old
+        </div>
+        {% if data['error_detail2']== "true" %} 
+          <p id="passport-issued-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> You need to enter your age
+          </p>
+        {% endif %}
+        {% if data['error_detail3']== "true" %} 
+          <p id="passport-issued-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> You must be over 18 years old
+          </p>
+        {% endif %}
+        <input class="govuk-input govuk-input--width-2" id="age" name="age" type="number" value="{{data['age']}}">
+      </div>
+
+      <div class="govuk-form-group 
+        {% if data['error_detail4']== "true" %} 
+          govuk-form-group--error 
+        {% endif %}
+      " id="nationality">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              Where were you born?
+            </h1>
+          </legend>
+          {% if data['error_detail4']== "true" %} 
+            <p id="passport-issued-error" class="govuk-error-message">
+              You must select a nationality
+            </p>
+          {% endif %}
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="where-do-you-live" name="nationality" type="radio" value="england" {% if data['nationality']=="england" %} checked="checked" {% endif %}>
+              <label class="govuk-label govuk-radios__label" for="where-do-you-live">
+                England
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="where-do-you-live-2" name="nationality" type="radio" value="scotland" {% if data['nationality']=="scotland" %} checked="checked" {% endif %}>
+              <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
+                Scotland
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="where-do-you-live-3" name="nationality" type="radio" value="wales" {% if data['nationality']=="wales" %} checked="checked" {% endif %}>
+              <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
+                Wales
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="where-do-you-live-4" name="nationality" type="radio" value="northern-ireland" {% if data['nationality']=="northern-ireland" %} checked="checked" {% endif %}>
+              <label class="govuk-label govuk-radios__label" for="where-do-you-live-4">
+                Northern Ireland
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <button class="govuk-button" data-module="govuk-button">
+        Submit
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+
+{% endblock %}
